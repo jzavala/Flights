@@ -16,7 +16,7 @@ namespace FlightApplication.Controllers
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
             SqlConnection sqlConnection1 = new
-            SqlConnection(ConfigurationManager.ConnectionStrings["Flights"].ToString());
+            SqlConnection(ConfigurationManager.ConnectionStrings["Flights"].ConnectionString);
 
             //SqlConnection sqlConnection1 = new SqlConnection("Flights");
             SqlCommand cmd = new SqlCommand();
@@ -30,6 +30,22 @@ namespace FlightApplication.Controllers
 
             reader = cmd.ExecuteReader();
             // Data is accessible through the DataReader object here.
+
+            string info;
+
+            try
+            {
+                while (reader.Read())
+                {
+                    info = String.Format("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}", 
+                        reader[0], reader[1], reader[2], reader[3], reader[4], reader[5], reader[6],
+                        reader[7], reader[8]);
+                }
+            }
+            finally
+            {
+                reader.Close();
+            }
 
             sqlConnection1.Close();
 
